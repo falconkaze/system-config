@@ -1,0 +1,2 @@
+Z Shell Manual::http://zsh.sourceforge.net/Doc/Release/index.html#Top
+Bash Manual::https://www.gnu.org/software/bash/manual/html_node/index.html

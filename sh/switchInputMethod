@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# !!! Mac 下使用下面命令切换到搜狗时，有时候输入不了中文
+language=$1
+
+echo $language
+if [[ $(uname) == "Darwin" ]]; then
+    if [[ $language == "en" ]]; then
+	    input_method_id="com.apple.keylayout.ABC"
+    else
+	    input_method_id="com.sogou.inputmethod.sogou.pinyin"
+    fi
+    ~/bin/InputSourceSelector/InputSourceSelector select $input_method_id
+else
+    # TODO Linux 下切换语言的方式
+    echo "test"
+fi

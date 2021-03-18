@@ -1,0 +1,18 @@
+** mac 配置
+
+*** 常用软件
+
+**** 手动安装的软件
+
+1. PDF Expert
+2. Scroll Reverser：反转鼠标滚轮，使之符合win，linux平台的使用习惯。
+3. Spectacle：软件分屏切换工具
+4. Typora：markdown 编辑工具
+5. Wireshark：抓包工具
+6. WPS
+7. Xmind：思维导图
+8. Snipaste：截图工具
+9. Karabiner
+10. Keyboard Maestro
+11. Alfred
+12 aText

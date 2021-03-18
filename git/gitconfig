@@ -1,0 +1,38 @@
+[alias]
+  co = checkout 
+  cob = checkout -b
+  ci = commit
+  ca = commit --amend
+  cl = clean
+  rb = rebase
+  br = branch
+  st = status
+  pl = pull
+  plm = pull origin master
+  plbm = pull --rebase origin master
+  df = diff --ws-error-highlight=all
+  dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%ar%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+  cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
+[core]
+  excludesfile = ~/.gitignore
+  editor = vim -u NONE -N
+  quotepath = false
+  safecrlf = warn
+  pager = less -FRX
+[branch]
+  autosetuprebase = always
+[color]
+  status = auto
+  diff = auto
+  branch = auto
+  interactive = auto
+[push]
+  default = simple
+[http]
+  postBuffer = 524288000
+  sslVerify = false
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true

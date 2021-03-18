@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [[ $(uname) == "Darwin" ]]; then
+    current_input_method_id=$(~/bin/InputSourceSelector/InputSourceSelector current)
+    if [[ $current_input_method_id == *"com.apple.keylayout.ABC"* ]]; then
+        echo -n "en"
+    else
+        echo -n "zh"
+    fi
+else
+    # TODO Linux 下切换语言的方式
+    echo "test"
+fi

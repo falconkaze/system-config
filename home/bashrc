@@ -1,0 +1,215 @@
+#
+# ~/.bashrc
+#
+# 输入目录，回车，自动在前面加cd命令
+#shopt -s autocd
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# This file is sourced by all *interactive* bash shells on startup,
+# including some apparently interactive shells such as scp and rcp
+# that can't tolerate any output.  So make sure this doesn't display
+# anything or bad things will happen !
+
+
+# Test for an interactive shell.  There is no need to set anything
+# past this point for scp and rcp, and it's important to refrain from
+# outputting anything in those cases.
+if [[ $- != *i* ]] ; then
+	# Shell is non-interactive.  Be done now!
+	return
+fi
+
+# Bash won't get SIGWINCH if another process is in the foreground.
+# Enable checkwinsize so that bash will check the terminal size when
+# it regains control.  #65623
+# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
+shopt -s checkwinsize
+
+# Disable completion when the input buffer is empty.  i.e. Hitting tab
+# and waiting a long time for bash to expand all of $PATH.
+shopt -s no_empty_cmd_completion
+
+# Enable history appending instead of overwriting when exiting.  #139609
+shopt -s histappend
+
+# Save each command to the history file as it's executed.  #517342
+# This does mean sessions get interleaved when reading later on, but this
+# way the history is always up to date.  History is not synced across live
+# sessions though; that is what `history -n` does.
+# Disabled by default due to concerns related to system recovery when $HOME
+# is under duress, or lives somewhere flaky (like NFS).  Constantly syncing
+# the history will halt the shell prompt until it's finished.
+#PROMPT_COMMAND='history -a'
+
+# Change the window title of X terminals 
+case ${TERM} in
+	[aEkx]term*|rxvt*|gnome*|konsole*|interix)
+		PS1='\[\033]0;\u@\h:\w\007\]'
+		;;
+	screen*)
+		PS1='\[\033k\u@\h:\w\033\\\]'
+		;;
+	*)
+		unset PS1
+		;;
+esac
+
+# Set colorful PS1 only on colorful terminals.
+# dircolors --print-database uses its own built-in database
+# instead of using /etc/DIR_COLORS.  Try to use the external file
+# first to take advantage of user additions.
+use_color=false
+if type -P dircolors >/dev/null ; then
+	# Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
+	LS_COLORS=
+	if [[ -f ~/.dir_colors ]] ; then
+		# If you have a custom file, chances are high that it's not the default.
+		used_default_dircolors="no"
+		eval "$(dircolors -b ~/.dir_colors)"
+	elif [[ -f /etc/DIR_COLORS ]] ; then
+		# People might have customized the system database.
+		used_default_dircolors="maybe"
+		eval "$(dircolors -b /etc/DIR_COLORS)"
+	else
+		used_default_dircolors="yes"
+		eval "$(dircolors -b)"
+	fi
+	if [[ -n ${LS_COLORS:+set} ]] ; then
+		use_color=true
+	fi
+	unset used_default_dircolors
+else
+	# Some systems (e.g. BSD & embedded) don't typically come with
+	# dircolors so we need to hardcode some terminals in here.
+	case ${TERM} in
+	[aEkx]term*|rxvt*|gnome*|konsole*|screen|cons25|*color) use_color=true;;
+	esac
+fi
+
+if ${use_color} ; then
+	if [[ ${EUID} == 0 ]] ; then
+		PS1+='\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
+	else
+		PS1+='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+	fi
+
+	alias ls='ls --color=auto'
+	alias grep='grep --colour=auto'
+	alias egrep='egrep --colour=auto'
+	alias fgrep='fgrep --colour=auto'
+else
+	if [[ ${EUID} == 0 ]] ; then
+		# show root@ when we don't have colors
+		PS1+='\u@\h \W \$ '
+	else
+		PS1+='\u@\h \w \$ '
+	fi
+fi
+
+for sh in /etc/bash/bashrc.d/* ; do
+	[[ -r ${sh} ]] && source "${sh}"
+done
+if [[ -f ~/.bash_aliases ]]; then
+  . ~/.bash_aliases
+fi
+if [[ -f ~/.bash_export ]]; then
+  . ~/.bash_export
+fi
+
+# Try to keep environment pollution down, EPA loves us.
+unset use_color sh
+
+#PS1="\[\033[0;32m\]\A \[\033[0;31m\]\u\[\033[0;34m\]@\[\033[0;35m\]\h\[\033[0;34m\]:\[\033[00;36m\]\w\[\033[0;33m\] $\[\033[0m\] "
+#PS1="\[\033[m\]->\W\[\033[0;33m\] $\[\033[0m\] "
+PS1='[\u: \w]\$ '
+# 显示分支官方实现
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWCOLORHINTS=true
+if [ -f ~/.config/completion/git-prompt.sh ]; then
+  source ~/.config/completion/git-prompt.sh
+# 这一行中间中括号部分语法与linux终端提示符语法相同，可以自行修改
+  PROMPT_COMMAND='__git_ps1 "[\u:\w]" "\\\$ "'
+fi
+# GIT 命令&分支自动完成
+if [ -f ~/.config/completion/git-completion.bash ]; then
+  . ~/.config/completion/git-completion.bash
+fi
+
+# --------------------------------------------------------------------
+#                       alias 配置
+# --------------------------------------------------------------------
+
+alias l='ls -CF --color=auto'
+alias ls='ls --color=auto'
+alias ll='ls -AlhF --color=auto'
+alias la='ls -A --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias gcc="gcc -Wall"
+
+alias emacs="emacs -nw"
+
+alias ping="ping -c 3"
+
+alias work-start='bash ~/git/github/linux-config/sh/tomato_work.sh'
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#alias mip='ifconfig enp1s0 | grep "inet " | awk '\''{print $2 }'\'''
+alias mip='bash ~/git/github/linux-config/sh/ip.sh'
+alias timestamp='nanotime=`date +%s%N`;echo ${nanotime:0:13}'
+alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
+alias genepass='strings /dev/urandom |tr -dc A-Za-z0-9 | head -c32; echo'
+
+alias hugonew='fun1() { file=(`hugo new ${1}`) && vim ${file[0]};};fun1'
+alias cd-='fun1() { if [ $# != 1 ]; then return; fi; local value="./"; for(( i = 1; i <= ${1}; i ++ ));do value=${value}"../"; done;cd ${value};};fun1'
+
+alias reload='source ~/.bashrc'
+alias bashrc='vim ~/.bashrc && source ~/.bashrc'
+alias bashpr='vim ~/.bash_profile && source ~/.bash_profile'
+alias bashal='vim ~/.bash_aliases && source ~/.bash_aliases'
+
+alias vimrc='vim ~/.vimrc'
+
+# 修改rm
+alias rm=trash-put
+alias rl=trash-list
+alias ur=trash-restore
+
+alias blog="cd ~/git/github/blog"
+alias note="cd ~/git/github/2018-notebook"
+alias config="cd ~/git/github/linux-config"
+alias read-note="cd ~/git/github/read-note"
+alias alg="cd ~/git/github/leecode"
+
+# bash history config
+export HISTCONTROL=ignoreboth
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+export HISTIGNORE="ls:history:pwd:"
+
+# language config
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_CTYPE=zh_CN.UTF-8
+
+# set default editor
+export EDITOR=vi
+
+export TMPDIR=~/.tmp
+
+~/work/shell/usable/english_bash.sh
+
+# need pkgfile.提示未知命令需要的包.
+source_files=("/usr/share/doc/pkgfile/command-not-found.bash" \
+    "/usr/share/nvm/init-nvm.sh" \
+    "~/.bazel/bin/bazel-complete.sh")
+for source_file in $source_files; do
+    [[ -r ${source_file} ]] && source "${source_file}"
+done
+unset source_files

@@ -1,0 +1,1 @@
+30 20 * * * ntpdate 0.cn.pool.ntp.org && hwclock --systohc && pkgfile -u
