@@ -50,5 +50,9 @@ alias pwd="pwd | pbcopy && pwd"
 #                      不同系统配置
 # --------------------------------------------------------------------
 if [[ $(uname) == "Darwin" ]]; then
-  alias rm="trash"
+    alias rm="trash"
+else
+    alias rm=trash-put
+    alias rl=trash-list
+    alias ur=trash-restore
 fi

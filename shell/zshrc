@@ -73,6 +73,7 @@ plugins=(
   autojump
   git
   zsh-autosuggestions
+#  zsh-syntax-highlighting
   transfer
 )
 
@@ -105,15 +106,23 @@ export LANG=en_US.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export MAVEN_OPTS="-Xms4g -Xmx8G"
+
+# zsh autojump
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
+
+# TODO
 [[ -r ~/.my_zshrc ]] && . ~/.my_zshrc
+[[ -r ~/.sh_common.sh ]] && . ~/.sh_common.sh
+[[ -r ~/.func_common.sh ]] && . ~/.func_common.sh
 [[ -r ~/.private.zsh ]] && . ~/.private.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# -------------------- mac bind keys -----------------------
+# ------------------------ bind keys --------------------------------
+bindkey -s '^[k' '^a^kcat <<EOF|xargs echo -n|pbcopy\n^y\nEOF\n'
 if [[ $(uname) == "Darwin" ]];then
-    bindkey -s '^[k' '^a^kcat <<EOF|xargs echo -n|pbcopy\n^y\nEOF\n'
+    echo "no customed bindkeys"
 else
     echo "no customed bindkeys"
 fi
@@ -121,8 +130,18 @@ fi
 #antigen use oh-my-zsh
 #antigen apply
 
+# -------------------------- alias config ---------------------------
+if [[ $(uname) == "Darwin" ]];then
+    echo "mac OS"
+else
+    alias rm=trash-put
+    alias rl=trash-list
+    alias ur=trash-restore
+fi
 alias trans="~/bin/trans -e google --shell"
 alias reload=". ~/.zshrc"
+
+# -------------------------- export config --------------------------
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
