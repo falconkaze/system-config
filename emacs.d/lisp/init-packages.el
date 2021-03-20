@@ -1,19 +1,17 @@
 ;; =================== 插件管理 ======================
 (require 'package)
 (package-initialize)
-(setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-			 ;;("melpa" . "http://elpa.emacs-china.org/melpa/")
-			 ("melpa" . "https://melpa.org/packages/")
-			 ("org" . "http://orgmode.org/elpa/")
+(setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			 ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			 ))
-;;(add-to-list 'package-archives
-;;             '("melpa-stable" . "https://stable.melpa.org/packages/"))
-;;(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-;; (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-;;                         ("org" . "http://orgmode.org/elpa/")
-;;                         ("marmalade" . "http://marmalade-repo.org/packages/")
-;;                         ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")))
+;;(setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+;;			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+;;			 ("melpa" . "https://melpa.org/packages/")
+;;                       ("marmalade" . "http://marmalade-repo.org/packages/")
+;;			 ("org" . "http://orgmode.org/elpa/")
+;;			 ))
 (setq package-enable-at-startup nil)
 
 (defun require-package (package)
@@ -32,6 +30,7 @@
 		    company
 		    company-jedi
 		    ;; --- better editor ---
+		    evil
 		    hungry-delete
 		    ;; TODO
 		    swiper

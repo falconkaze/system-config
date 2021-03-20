@@ -4,7 +4,8 @@ if [[ $(uname) = "Darwin" ]]; then
     echo "Mac osx"
 elif [[ $(uname) = *"arch"* ]]; then
     echo "Archlinux OS"
-    sudo pacman -S fzf
+    sudo pacman -S fzf guake zsh sakura
+    sudo pacman -S google-chrome
     sudo pacman -S fcitx fcitx-qt5
     sudo yay -S fcitx-sogoupinyin
 fi

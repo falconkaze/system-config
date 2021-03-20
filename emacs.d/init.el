@@ -22,7 +22,7 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-;;(menu-bar-mode nil)
+(menu-bar-mode -1)
 
 (set-face-attribute 'default nil :height 140) ;; set font size
 
