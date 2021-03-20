@@ -10,6 +10,11 @@
 (scroll-bar-mode -1) ; 关闭文件滑动控件
 (global-linum-mode 1) ; always show line numbers
 (setq linum-format "%d")  ;set format
+(setq frame-resize-pixelwise t) ;设置缩放的模式,避免Mac平台最大化窗口以后右边和下边有空隙
+
+;; 平滑地进行半屏滚动，避免滚动后recenter操作
+(setq scroll-step 1
+      scroll-conservatively 10000)
 
 (set-language-environment "UTF-8")
 
@@ -17,7 +22,7 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(menu-bar-mode nil)
+;;(menu-bar-mode nil)
 
 (set-face-attribute 'default nil :height 140) ;; set font size
 
