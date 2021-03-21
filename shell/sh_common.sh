@@ -15,6 +15,8 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+alias tailf='tail -f'
+
 #alias genepass='strings /dev/urandom |tr -dc A-Za-z0-9 | head -c32; echo'
 
 alias gcc="gcc -Wall"

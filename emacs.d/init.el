@@ -2,6 +2,7 @@
 (require 'init-packages)
 (require 'init-keybindings)
 (require 'init-org)
+(require 'init-auto-save)
 ;(require 'custom)
 
 ;; ============================= 通用配置 ============================
@@ -41,12 +42,11 @@
 (global-hl-line-mode 1) ;; 高亮当前行
 (setq initial-frame-alist (quote ((fullscreen . maximized)))) ;; 默认全屏
 (global-auto-revert-mode 1) ;; 自动加载外部修改过的文件
-(setq auto-save-default nil) ;; 不生产自动保存的文件
 (fset 'yes-or-no-p 'y-or-n-p) ;; 所有yes/no都改为y/n
 
 (require 'evil)
 (evil-mode 1)
-(add-hook 'evil-insert-state-exit-hook 'save-buffer) ;; 离开插入模式时保存当前文件
+
 ;; 退出 Evil Insert 模式时切换到英文输入法。
 (add-hook 'evil-insert-state-exit-hook '(lambda ()
 					  (setq-local my/input-method (shell-command-to-string "/Users/yaokeqi/git/mine/linux-config/sh/currentInputMethod"))

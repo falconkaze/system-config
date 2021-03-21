@@ -111,10 +111,8 @@ export MAVEN_OPTS="-Xms4g -Xmx8G"
 [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
-# TODO
-[[ -r ~/.my_zshrc ]] && . ~/.my_zshrc
-[[ -r ~/.sh_common.sh ]] && . ~/.sh_common.sh
 [[ -r ~/.func_common.sh ]] && . ~/.func_common.sh
+[[ -r ~/.sh_common.sh ]] && . ~/.sh_common.sh
 [[ -r ~/.private.zsh ]] && . ~/.private.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

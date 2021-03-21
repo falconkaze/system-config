@@ -29,6 +29,7 @@
 		    ;; --- auto-completion ---
 		    company
 		    company-jedi
+		    ox-hugo
 		    ;; --- better editor ---
 		    evil
 		    hungry-delete
@@ -119,4 +120,7 @@
 (setq anki-editor-create-decks t)
 
 (load-theme 'spacemacs-light t)
+
+(with-eval-after-load 'ox
+  (require 'ox-hugo))
 (provide 'init-packages)
