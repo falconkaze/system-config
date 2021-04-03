@@ -1,4 +1,5 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path "~/.emacs.d/copy-from-web/")
 (require 'init-packages)
 (require 'init-keybindings)
 (require 'init-org)
@@ -29,15 +30,16 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; 保存前清理行尾的空格
 
-;(setq make-backup-files nil) ;; 不进行备份
-;; 配置自动备份
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-  backup-by-copying t    ; Don't delink hardlinks
-  version-control t      ; Use version numbers on backups
-  delete-old-versions t  ; Automatically delete excess backups
-  kept-new-versions 20   ; how many of the newest versions to keep
-  kept-old-versions 5    ; and how many of the old
-  )
+; 配置自动备份
+(setq make-backup-files nil) ;; 不进行备份
+;(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+;  backup-by-copying t    ; Don't delink hardlinks
+;  version-control t      ; Use version numbers on backups
+;  delete-old-versions t  ; Automatically delete excess backups
+;  kept-new-versions 20   ; how many of the newest versions to keep
+;  kept-old-versions 5    ; and how many of the old
+;  )
+
 (delete-selection-mode 1) ;; 选中后编辑直接替换
 (global-hl-line-mode 1) ;; 高亮当前行
 (setq initial-frame-alist (quote ((fullscreen . maximized)))) ;; 默认全屏
@@ -49,12 +51,12 @@
 
 ;; 退出 Evil Insert 模式时切换到英文输入法。
 (add-hook 'evil-insert-state-exit-hook '(lambda ()
-					  (setq-local my/input-method (shell-command-to-string "/Users/yaokeqi/git/mine/linux-config/sh/currentInputMethod"))
-					  (call-process-shell-command "/Users/yaokeqi/git/mine/linux-config/sh/switchInputMethod en" nil nil t)))
+					  (setq-local my/input-method (shell-command-to-string "~/git/mine/system-config/sh/currentInputMethod"))
+					  (call-process-shell-command "~/git/mine/system-config/sh/switchInputMethod en" nil nil t)))
 ;; 回到 Evil Insert 模式时切换到原来的输入法。
 (add-hook 'evil-insert-state-entry-hook '(lambda ()
 					   (when (boundp 'my/input-method)
-					     (call-process-shell-command "/Users/yaokeqi/git/mine/linux-config/sh/switchInputMethod" nil nil t my/input-method)
+					     (call-process-shell-command "~/git/mine/system-config/sh/switchInputMethod" nil nil t my/input-method)
 					     )
 					   ))
 
@@ -136,4 +138,9 @@
               (add-to-list 'default-frame-alist '(top    . 0))
               (add-to-list 'default-frame-alist '(height . 35))
               (add-to-list 'default-frame-alist '(width  . 100))))
+(column-number-mode 1)
+
+;;(setq desktop-dirname "./")
+;;(setq desktop-path '("./" "~/.emacs.d" "~"))
+;;(desktop-save-mode 1)
 (message "Config load finish!!!")
