@@ -4,6 +4,8 @@ emacs.d/recentf
 emacs.d/bookmarks
 emacs.d/tramp
 emacs.d/request/curl-cookie-jar
+emacs.d/abbrev_defs
+emacs.d/semanticdb/
 .DS_Store
 __pycache__
 *.swp

@@ -10,9 +10,10 @@
 (setq inhibit-splash-screen 1) ;; 关闭启动帮助画面
 (tool-bar-mode -1) ;; 关闭工具栏
 (scroll-bar-mode -1) ; 关闭文件滑动控件
+(menu-bar-mode -1) ;; 关闭 menu bar
 (global-linum-mode 1) ; always show line numbers
 (setq linum-format "%d")  ;set format
-(setq frame-resize-pixelwise t) ;设置缩放的模式,避免Mac平台最大化窗口以后右边和下边有空隙
+(column-number-mode 1)
 
 ;; 平滑地进行半屏滚动，避免滚动后recenter操作
 (setq scroll-step 1
@@ -24,7 +25,6 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(menu-bar-mode -1)
 
 (set-face-attribute 'default nil :height 140) ;; set font size
 
@@ -129,16 +129,17 @@
     (set-frame-size frame w h)
   )
 )
-;;(add-hook 'after-make-frame-hook
-;;	  #'(lambda () (arrange-frame 100 35 0 0)))
-;; (arrange-frame 120 30 100 50)
+
 (add-hook 'before-make-frame-hook
-          #'(lambda ()
-              (add-to-list 'default-frame-alist '(left   . 0))
-              (add-to-list 'default-frame-alist '(top    . 0))
-              (add-to-list 'default-frame-alist '(height . 35))
-              (add-to-list 'default-frame-alist '(width  . 100))))
-(column-number-mode 1)
+	  #'(lambda ()
+	      (add-to-list 'default-frame-alist '(fullscreen . maximized))))
+;; (setq frame-resize-pixelwise t) ;设置缩放的模式,避免Mac平台最大化窗口以后右边和下边有空隙
+;; (add-hook 'before-make-frame-hook
+;;           #'(lambda ()
+;;               (add-to-list 'default-frame-alist '(left   . 0))
+;;               (add-to-list 'default-frame-alist '(top    . 0))
+;;               (add-to-list 'default-frame-alist '(height . 35))
+;;               (add-to-list 'default-frame-alist '(width  . 100))))
 
 ;;(setq desktop-dirname "./")
 ;;(setq desktop-path '("./" "~/.emacs.d" "~"))

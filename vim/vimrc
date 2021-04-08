@@ -386,27 +386,45 @@ function! Zoom ()
 endfunction
 
 nmap <leader>z :call Zoom()<CR>
-"---------------------------------auto fcitx----------------------------------
-let g:input_toggle = 1
-function! Fcitx2en()
-  let s:input_status = system("fcitx-remote")
-  if s:input_status == 2
-	let g:input_toggle = 1
-	let l:a = system("fcitx-remote -c")
-  endif
-endfunction
+"------------------------------- auto input method -----------------------------
+if has('mac')
+    function! InputMethodWhenExit()
+        let b:input_method = system("~/git/mine/system-config/sh/currentInputMethod")
+        if (b:input_method == "zh")
+            echom system("~/git/mine/system-config/sh/mac/switchInputMethod en")
+        endif
+    endfunction
 
-function! Fcitx2zh()
-  let s:input_status = system("fcitx-remote")
-  if s:input_status != 2 && g:input_toggle == 1
-	let l:a = system("fcitx-remote -o")
-	let g:input_toggle = 0
-  endif
-endfunction
+    function! InputMethodWhenEnter()
+        if (exists("b:input_method") && len(b:input_method) > 0 && b:input_method == "zh")
+            echom system("~/git/mine/system-config/sh/mac/switchInputMethod zh")
+        endif
+    endfunction
+elseif has('unix')
+    "##### auto fcitx start ######
+    let g:input_toggle = 1
+    "切换到英语
+    function! InputMethodWhenExit()
+      let s:input_status = system("fcitx-remote")
+      if s:input_status == 2
+        let g:input_toggle = 1
+        let l:a = system("fcitx-remote -c")
+      endif
+    endfunction
+    "切换到中文
+    function! InputMethodWhenEnter()
+      let s:input_status = system("fcitx-remote")
+      if s:input_status != 2 && g:input_toggle == 1
+        let l:a = system("fcitx-remote -o")
+        let g:input_toggle = 0
+      endif
+    endfunction
 
-set ttimeoutlen=150
+    set ttimeoutlen=150
+    "##### auto fcitx end ######
+endif
 "退出插入模式
-autocmd InsertLeave * call Fcitx2en()
+autocmd InsertLeave * call InputMethodWhenExit()
 "进入插入模式
-autocmd InsertEnter *.md call Fcitx2zh()
-"##### auto fcitx end ######
+"autocmd InsertEnter *.md call InputMethodWhenEnter()
+autocmd InsertEnter * call InputMethodWhenEnter()

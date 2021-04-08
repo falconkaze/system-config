@@ -48,6 +48,27 @@ alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
 # TODO 根据操作系统配置
 alias pwd="pwd | pbcopy && pwd"
 
+# 开发配置
+alias mcla='mvn -U clean install -Dcheckstyle.skip=true -Dmaven.test.skip=true -Dcicheck.skip=true'
+
+# git 配置
+alias ga='git add'
+alias ga.='git add .'
+alias gbr='git branch'
+alias gbrd='git branch -d'
+alias gbrD='git branch -D'
+alias gci='git commit'
+alias gcim='git commit -m'
+alias gca='git commit --amend'
+alias gco='git checkout'
+alias gcob='git checkout -b'
+alias gcom='git checkout master'
+alias gplbm='git pull --rebase origin master'
+alias gst='git status'
+alias glg='git log --stat'
+alias gpsup='git push --set-upstream origin $(git_current_branch)'
+alias gplbup='git pull --rebase origin $(git_current_branch)'
+
 # --------------------------------------------------------------------
 #                      不同系统配置
 # --------------------------------------------------------------------
