@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# !!! Mac 下使用下面命令切换到搜狗时，有时候输入不了中文
+language=$1
+
+echo $language
+if [[ $(uname) == "Darwin" ]]; then
+    if [[ $language == "en" ]]; then
+        osascript <<EOF
+        tell application "System Events"
+            key code 113
+        end tell
+EOF
+    else
+        osascript <<EOF
+        tell application "System Events"
+            key code 107
+        end tell
+EOF
+    fi
+else
+    # TODO Linux 下切换语言的方式
+    echo "test"
+fi
