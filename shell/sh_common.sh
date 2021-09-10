@@ -6,7 +6,7 @@
 
 alias l='ls -CF --color=auto'
 alias ls='ls --color=auto'
-alias ll='ls -AlhF --color=auto'
+alias ll='ls -AlhF --color=auto --time-style=long-iso'
 alias la='ls -A --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -53,7 +53,10 @@ alias mcla='mvn -U clean install -Dcheckstyle.skip=true -Dmaven.test.skip=true -
 
 # git 配置
 alias ga='git add'
+alias gau='git add -u'
 alias ga.='git add .'
+# 添加所有 model 类
+alias gam='git add $(git status --porcelain --untracked-files=all | sed s/^...// | grep -E "model|constant")'
 alias gbr='git branch'
 alias gbrd='git branch -d'
 alias gbrD='git branch -D'
@@ -68,6 +71,9 @@ alias gst='git status'
 alias glg='git log --stat'
 alias gpsup='git push --set-upstream origin $(git_current_branch)'
 alias gplbup='git pull --rebase origin $(git_current_branch)'
+
+# chmod u+x
+alias u+x='chmod u+x'
 
 # --------------------------------------------------------------------
 #                      不同系统配置

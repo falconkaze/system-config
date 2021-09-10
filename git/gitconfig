@@ -15,7 +15,7 @@
   cleanup = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 [core]
   excludesfile = ~/.gitignore
-  editor = vim -u NONE -N
+  editor = vim
   quotepath = false
   safecrlf = warn
   pager = less -FRX
