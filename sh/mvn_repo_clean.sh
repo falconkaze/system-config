@@ -9,7 +9,7 @@ do
     for d in $(find $path -type d -regex '.*/[0-9].*' | sed 's/\/[0-9]\+\(.[0-9]\+\).*//g' | uniq)
     do
         set +e
-        cd $d
+        cd "$d"
         if [ $? -ne 0 ]
         then
             continue
@@ -22,8 +22,8 @@ do
             continue
         fi
 
-        # 保留最新10个文件
-        rm -rf $(ls -t -d */ | sed -n '11,$p')
+        # 保留最新5个文件
+        rm -rf $(ls -t -d */ | sed -n '6,$p')
     done
     echo clean $path success!
 done

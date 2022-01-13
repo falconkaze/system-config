@@ -15,4 +15,14 @@
 9. Karabiner
 10. Keyboard Maestro
 11. Alfred
-12 aText
+12. aText
+13. KeyCastr：将按键展示在屏幕上，方便录制教程
+14. Kap：录屏软件
+
+**** Terminal 工具
+
+| 工具      | 用途                        | 安装方式                 | 教程        |
+|-----------+-----------------------------+--------------------------+-------------|
+| termtosvg | 将命令行操作录制为 svg 文件 | =pip3 install termtosvg= | [[https://github.com/nbedos/termtosvg][GitHub 地址]] |
+
+**** Python 工具包

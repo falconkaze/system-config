@@ -43,6 +43,7 @@ alias cdg="cd ~/git"
 # custome command
 alias timestamp='nanotime=`date +%s%N`;echo ${nanotime:0:13}'
 alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
+alias date2time='fun() { date -d "$*" "+%s000"};fun'
 
 #\[\033[01;31m\]\u\[\033[00m\]\[\033[01;32m\]@\H\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$
 # TODO 根据操作系统配置
@@ -64,6 +65,7 @@ alias gci='git commit'
 alias gcim='git commit -m'
 alias gca='git commit --amend'
 alias gco='git checkout'
+alias gco.='git checkout .'
 alias gcob='git checkout -b'
 alias gcom='git checkout master'
 alias gplbm='git pull --rebase origin master'
@@ -71,6 +73,7 @@ alias gst='git status'
 alias glg='git log --stat'
 alias gpsup='git push --set-upstream origin $(git_current_branch)'
 alias gplbup='git pull --rebase origin $(git_current_branch)'
+alias gdf='git diff --ws-error-highlight=all'
 
 # chmod u+x
 alias u+x='chmod u+x'
