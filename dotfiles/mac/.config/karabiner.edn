@@ -1,0 +1,77 @@
+{
+  ;; !  | means mandatory
+  ;; #  | means optional
+  ;; !! | mandatory command + control + optional + shift (hyper)
+  ;; ## | optional any
+
+  ;; to understand better how modifiers work in karabiner
+  ;; https://pqrs.org/osx/karabiner/json.html#from-event-definition-modifiers
+
+  ;; C  | left_command
+  ;; T  | left_control
+  ;; O  | left_option
+  ;; S  | left_shift
+  ;; F  | fn
+  ;; Q  | right_command
+  ;; W  | right_control
+  ;; E  | right_option
+  ;; R  | right_shift
+  ;; need to prefix C T O S F with ! or #
+
+:profiles
+{:goku {:default true
+        :sim     50
+        :delay   80
+        :alone   120
+        :held    70}}
+:devices {:apple [{:vendor 1452 :product_id 832}]
+          :ikbc [{:vendor 1547 :product_id 31235}]}
+:applications {:pdf ["^com\\.readdle\\.PDFExpert-Mac$"]
+               :chrome ["^com\\.google\\.Chrome$"]
+               :emacs ["^org\\.gnu\\.Emacs$"]
+               :wps ["^com\\.kingsoft\\.wpsoffice\\.mac$"]
+               :wechat ["^com\\.tencent\\.xinWeChat$"]
+               :kim ["^Kem$"]
+               :idea ["^com\\.jetbrains\\.intellij$"]
+               :xmind ["^net\\.xmind\\.vana\\.app$"]
+               }
+:main [
+       {:des "pdf vim move"
+        :rules [
+                [:h :left_arrow :pdf]
+                [:j :down_arrow :pdf]
+                [:k :up_arrow :pdf]
+                [:l :right_arrow :pdf]
+                [:!Tv :page_down :pdf]
+                [:!Ov :page_up :pdf]
+                ]
+        }
+       {:des "caps lock=>left_control"
+        :rules [
+                ;[:!Rcaps_lock :caps_lock]
+                [:##caps_lock :left_control]
+                ]}
+       {:des "Switch to special Input Method"
+        :rules [
+                [:##left_shift :left_shift nil {:alone :f14}]
+                [:##right_shift :right_shift nil {:alone :f15}]
+                ]}
+       {:des "Emacs move"
+        :rules [
+                [:!Te :end [:wps]]
+                [:!Ta :home [:wps]]
+                [:!Tn :down_arrow [:wps :xmind]]
+                [:!Tp :up_arrow [:wps :xmind]]
+                ]}
+       ;{:des "caps lock=>lctrl"
+       ; :rules [[:##caps_lock :left_control nil {:alone :escape}]]}
+       ;{:des "WIN+hjkl=>move"
+       ; :rules [
+       ;         [:!Ch :left_arrow]
+       ;         [:!Cj :down_arrow]
+       ;         [:!Ck :up_arrow]
+       ;         [:!Cl :right_arrow]
+       ;         ]
+       ; }
+      ]
+ }
