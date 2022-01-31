@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: 创建 hugo 文件头
+# key: thugo
+# --
+
+#+HUGO_BASE_DIR: ../../
+#+HUGO_AUTO_SET_LASTMOD: t
+#+HUGO_CATEGORIES: $1
+#+HUGO_TAGS: $2
+#+AUTHOR: falconkaze
+
+#+DATE: `(format-time-string "%Y-%m-%d" (current-time))`
+#+TITLE: $3
