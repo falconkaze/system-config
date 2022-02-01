@@ -1,4 +1,5 @@
 ;; =================== 插件管理 ======================
+
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
@@ -71,7 +72,11 @@
     (when (not (package-installed-p pkg))
       (package-install pkg))))
 
-;; TODO Find Executable Path on OS X
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+
+;; TODO Find Executab
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
@@ -82,6 +87,21 @@
 (evil-mode 1)
 (setcdr evil-insert-state-map nil)
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
+
+(use-package posframe)
+(use-package rime
+  :init
+  (setq default-input-method "rime")
+  :custom
+  (rime-select-schema "luna-pinyin_simp")
+;  (rime-user-data-dir "~/.local/share/fcitx5/rime")
+  (rime-posframe-properties
+   (list :background-color "#333333"
+         :foreground-color "#dcdccc"
+         :internal-border-width 1))
+  (rime-show-candidate 'posframe)
+					; (set-face-attribute 'rime-default-face nil :foreground "#839496" :background "#073642")
+  )
 
 (require 'hungry-delete)
 (global-hungry-delete-mode)
@@ -124,4 +144,5 @@
 
 (with-eval-after-load 'ox
   (require 'ox-hugo))
+
 (provide 'init-packages)

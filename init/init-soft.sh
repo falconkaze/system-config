@@ -3,14 +3,32 @@
 if [[ $(uname) = "Darwin" ]]; then
     brew install aspell
     echo "Mac osx"
-elif [[ $(uname) = *"arch"* ]]; then
+elif [[ $(uname -a) = *"arch"* ]]; then
     echo "Archlinux OS"
-    sudo pacman -S aspell aspell-en
-    sudo pacman -S fzf guake zsh sakura
-    sudo pacman -S google-chrome
-    sudo pacman -S fcitx fcitx-qt5
-    # TODO
-    sudo pacman -S i3 numlockx
+    # gui
+    sudo pacman -S xorg xorg-init
+    sudo pacman -S gvim emacs \
+        # 回收站
+        trash-cli \
+        aspell aspell-en \
+        # 命令行配置
+        fzf guake zsh sakura \
+        # 输入法
+        fcitx5 fcitx5-qt fcitx5-gtk fcitx5-configtool fcitx5-rime \
+        # 壁纸、截图
+        feh scrot \
+        # i3 配置
+        i3-gaps i3status i3lock numlockx polybar dmenu \
+        rofi \
+        zip unzip \
+        xclip
+
+    yay -S google-chrome
+
+    # 配置 Vundle 插件
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+    # zsh oh-my-zsh
     yay -S fcitx-sogoupinyin
     # TODO
     yay -S autokey
@@ -20,5 +38,5 @@ fi
 chsh -s /bin/zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 # install zsh plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting

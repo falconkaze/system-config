@@ -1,6 +1,7 @@
-[[ ! -f ~/.zinit/bin/zinit.zsh ]] && git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+[[ ! -f ~/.zinit/bin/zinit.zsh ]] && git clone https://github.com/zdharma-continuum/zinit.git ~/.zinit/bin
 source ~/.zinit/bin/zinit.zsh
 zinit load skywind3000/z.lua
+zinit load zsh-users/zsh-autosuggestions
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -75,7 +76,6 @@ ZSH_THEME="robbyrussell"
 plugins=(
 #  autojump
   git
-  zsh-autosuggestions
 #  zsh-syntax-highlighting
   transfer
 )
@@ -121,11 +121,10 @@ export MAVEN_OPTS="-Xms4g -Xmx8G"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # ------------------------ bind keys --------------------------------
-bindkey -s '^[k' '^a^kcat <<EOF|xargs echo -n|pbcopy\n^y\nEOF\n'
 if [[ $(uname) == "Darwin" ]];then
-    echo "no customed bindkeys"
-else
-    echo "no customed bindkeys"
+    bindkey -s '^[k' '^a^kcat <<EOF|xargs echo -n|pbcopy\n^y\nEOF\n'
+elif [[ $(uname) == "Linux" ]]; then
+    bindkey -s '^[k' '^a^kcat <<EOF|xargs echo -n|xclip -selection c \n^y\nEOF\n'
 fi
 #source /usr/local/share/antigen/antigen.zsh
 #antigen use oh-my-zsh

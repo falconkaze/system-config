@@ -1,9 +1,18 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/copy-from-web/")
+
+(set-language-environment "UTF-8")
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
 (require 'init-packages)
 (require 'init-keybindings)
-(require 'init-org)
 (require 'init-auto-save)
+(require 'init-org)
+
 ;(require 'custom)
 
 ;; ============================= 通用配置 ============================
@@ -18,13 +27,6 @@
 ;; 平滑地进行半屏滚动，避免滚动后recenter操作
 (setq scroll-step 1
       scroll-conservatively 10000)
-
-(set-language-environment "UTF-8")
-
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
 
 (set-face-attribute 'default nil :height 140) ;; set font size
 
@@ -46,19 +48,16 @@
 (global-auto-revert-mode 1) ;; 自动加载外部修改过的文件
 (fset 'yes-or-no-p 'y-or-n-p) ;; 所有yes/no都改为y/n
 
-(require 'evil)
-(evil-mode 1)
-
-;; 退出 Evil Insert 模式时切换到英文输入法。
-(add-hook 'evil-insert-state-exit-hook '(lambda ()
-					  (setq-local my/input-method (shell-command-to-string "~/git/mine/system-config/sh/currentInputMethod"))
-					  (call-process-shell-command "~/git/mine/system-config/sh/switchInputMethod en" nil nil t)))
-;; 回到 Evil Insert 模式时切换到原来的输入法。
-(add-hook 'evil-insert-state-entry-hook '(lambda ()
-					   (when (boundp 'my/input-method)
-					     (call-process-shell-command "~/git/mine/system-config/sh/switchInputMethod" nil nil t my/input-method)
-					     )
-					   ))
+;;; 退出 Evil Insert 模式时切换到英文输入法。
+;(add-hook 'evil-insert-state-exit-hook '(lambda ()
+;					  (setq-local my/input-method (shell-command-to-string "~/git/mine/system-config/sh/currentInputMethod"))
+;					  (call-process-shell-command "~/git/mine/system-config/sh/switchInputMethod en" nil nil t)))
+;;; 回到 Evil Insert 模式时切换到原来的输入法。
+;(add-hook 'evil-insert-state-entry-hook '(lambda ()
+;					   (when (boundp 'my/input-method)
+;					     (call-process-shell-command "~/git/mine/system-config/sh/switchInputMethod" nil nil t my/input-method)
+;					     )
+;					   ))
 
 ;; 配置最近文件 https://www.emacswiki.org/emacs/RecentFiles
 (recentf-mode 1)
@@ -144,4 +143,5 @@
 ;;(setq desktop-dirname "./")
 ;;(setq desktop-path '("./" "~/.emacs.d" "~"))
 ;;(desktop-save-mode 1)
+
 (message "Config load finish!!!")

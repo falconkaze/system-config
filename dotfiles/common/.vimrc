@@ -406,17 +406,17 @@ elseif has('unix')
     let g:input_toggle = 1
     "切换到英语
     function! InputMethodWhenExit()
-      let s:input_status = system("fcitx-remote")
+      let s:input_status = system("fcitx5-remote")
       if s:input_status == 2
         let g:input_toggle = 1
-        let l:a = system("fcitx-remote -c")
+        let l:a = system("fcitx5-remote -c")
       endif
     endfunction
     "切换到中文
     function! InputMethodWhenEnter()
-      let s:input_status = system("fcitx-remote")
+      let s:input_status = system("fcitx5-remote")
       if s:input_status != 2 && g:input_toggle == 1
-        let l:a = system("fcitx-remote -o")
+        let l:a = system("fcitx5-remote -o")
         let g:input_toggle = 0
       endif
     endfunction
