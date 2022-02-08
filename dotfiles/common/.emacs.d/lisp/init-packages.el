@@ -94,7 +94,7 @@
   (setq default-input-method "rime")
   :custom
   (rime-select-schema "luna-pinyin_simp")
-;  (rime-user-data-dir "~/.local/share/fcitx5/rime")
+  (rime-user-data-dir "~/.local/share/fcitx5/rime")
   (rime-posframe-properties
    (list :background-color "#333333"
          :foreground-color "#dcdccc"
@@ -102,6 +102,12 @@
   (rime-show-candidate 'posframe)
 					; (set-face-attribute 'rime-default-face nil :foreground "#839496" :background "#073642")
   )
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-hook 'yaml-mode-hook
+	  '(lambda ()
+             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 (require 'hungry-delete)
 (global-hungry-delete-mode)

@@ -46,8 +46,6 @@ alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
 alias date2time='fun() { date -d "$*" "+%s000"};fun'
 
 #\[\033[01;31m\]\u\[\033[00m\]\[\033[01;32m\]@\H\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$
-# TODO 根据操作系统配置
-alias pwd="pwd | pbcopy && pwd"
 
 # 开发配置
 alias mcla='mvn -U clean install -Dcheckstyle.skip=true -Dmaven.test.skip=true -Dcicheck.skip=true'
@@ -82,9 +80,11 @@ alias u+x='chmod u+x'
 #                      不同系统配置
 # --------------------------------------------------------------------
 if [[ $(uname) == "Darwin" ]]; then
+    alias pwd="pwd | pbcopy && pwd"
     alias rm="trash"
 else
     alias rm=trash-put
     alias rl=trash-list
     alias ur=trash-restore
+    alias pwd="pwd | xclip -selection c && pwd"
 fi
