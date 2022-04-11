@@ -17,6 +17,7 @@
 ;;(server-start)
 (require 'org-protocol)
 
+;; ================================任务快速归档=================================
 ;; 任务完成后，自动归档
 (defun my/auto-archive-task (change-plist)
   (let ((type (plist-get change-plist :type))
@@ -114,6 +115,21 @@
 	     '("tw" "Work Task" entry
 	       (file+function "~/org/private/work.org" (lambda () (find-tree-location (get-work-tree))))
 	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t ))
+
+;; daily 相关
+(add-to-list 'org-capture-templates '("d" "Daily"))
+(add-to-list 'org-capture-templates
+	     '("dr" "Read Book Task" entry
+	       (file+olp "~/org/common/daily.org" "Daily" "Reading")
+	       "* %^{书名}\n%U\n" :clock-in t :clock-resume t))
+(add-to-list 'org-capture-templates
+	     '("dt" "Tool Task" entry
+	       (file+olp "~/org/common/daily.org" "Daily" "Tool")
+	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
+(add-to-list 'org-capture-templates
+	     '("ds" "Study Task" entry
+	       (file+olp "~/org/common/daily.org" "Daily" "Study")
+	       "* %^{任务名}\n%U\n" :clock-in t :clock-resume t))
 ;; note 相关
 (add-to-list 'org-capture-templates '("n" "Notes"))
 ;; 日志/日记相关

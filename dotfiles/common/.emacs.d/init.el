@@ -15,13 +15,17 @@
 
 ;(require 'custom)
 
-;; ============================= 通用配置 ============================
+;; ==================================常规配置===================================
+
 (setq inhibit-splash-screen 1) ;; 关闭启动帮助画面
 (tool-bar-mode -1) ;; 关闭工具栏
 (scroll-bar-mode -1) ; 关闭文件滑动控件
 (menu-bar-mode -1) ;; 关闭 menu bar
 (global-linum-mode 1) ; always show line numbers
 (setq linum-format "%d")  ;set format
+;; 默认通过软链接编辑 git 控制下的文件
+;; https://stackoverflow.com/questions/15390178/emacs-and-symbolic-links
+(setq vc-follow-symlinks t)
 (column-number-mode 1)
 
 ;; 平滑地进行半屏滚动，避免滚动后recenter操作
@@ -59,16 +63,65 @@
 ;					     )
 ;					   ))
 
-;; 配置最近文件 https://www.emacswiki.org/emacs/RecentFiles
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(setq recentf-max-saved-items 25)
-(global-set-key "\C-x\ \C-r" 'helm-recentf)
+; =======================使用左右 Shift 切换中英文输入法========================
+(defun my-set-rime-input-method()
+  (interactive)
+  (set-input-method "rime")
+  )
+(defun my-set-no-input-method()
+  (interactive)
+  (if (string= "rime" current-input-method)
+      (toggle-input-method)
+    nil
+    )
+  )
+;; Mac 下 搭配 Karabiner 使用
+(global-set-key (kbd "<f16>") 'my-set-rime-input-method)
+(global-set-key (kbd "<f17>") 'my-set-no-input-method)
+;(define-key key-translation-map (kbd "<f16>") (kbd "C-\\"))
+;(define-key key-translation-map (kbd "<f17>") (kbd "C-\\"))
 
-(global-company-mode 1) ;; 开启全局 company 补全
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-;;
-;;;; indent
+; ================================快速输入注释行================================
+(setq myv/comment-symbol #s(hash-table
+			    test equal
+			    data (
+				  "emacs-lisp-mode" ";;"
+				  "sh-mode" "#"
+				  )))
+
+(defun myf/gen-comment-block()
+  (interactive)
+  (let (comment comment-len fill-sign fill-sign-num left-num right-num)
+    (setq comment (read-string "请输入注释："))
+    (setq fill-sign (gethash (format "%s" major-mode) myv/comment-symbol))
+    (setq comment-len (string-width comment ))
+    (setq fill-sign-num (- (- 79 (length fill-sign)) comment-len))
+    (setq left-num (/ fill-sign-num 2))
+    (setq right-num (- fill-sign-num left-num))
+    (concat fill-sign " " (make-string left-num ?=) comment (make-string right-num ?=))
+    )
+  )
+
+; ==============================设置中文&外文字体===============================
+(defun set-font (english chinese english-size chinese-size)
+  (set-face-attribute 'default nil :font
+                      (format   "%s:pixelsize=%d"  english english-size))
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font) charset
+                      (font-spec :family chinese :size chinese-size))))
+
+;; 解决命令行下启动 Emacs 提示 “Fontset 'tty' does not exist” 错误
+;; https://fanqo.wordpress.com/2011/04/19/emacs-nw-fontset-tty-does-not-exist/
+;; https://www.programminghunter.com/article/25811307569/
+(add-to-list 'after-make-frame-functions
+             (lambda (new-frame)
+               (select-frame new-frame)
+               (if window-system
+		   ;; 设置中英文字体
+                   (set-font   "WenQuanYi Zen Hei Mono" "WenQuanYi Zen Hei Mono" 16 16)
+		 )))
+
+; ================================快速格式化代码================================
 (defun indent-buffer()
   (interactive)
   (indent-region (point-min) (point-max)))
@@ -83,7 +136,18 @@
       (progn
 	(indent-buffer)
 	(message "Indent buffer.")))))
-(global-set-key (kbd "M-s-l") 'indent-region-or-buffer)
+(global-set-key (kbd "M-C-l") 'indent-region-or-buffer)
+
+;; ============================保存&访问最近访问文件============================
+;; https://www.emacswiki.org/emacs/RecentFiles
+(recentf-mode 1)
+(setq recentf-max-menu-items 100)
+(setq recentf-max-saved-items 100)
+(global-set-key "\C-x\ \C-r" 'helm-recentf)
+
+(global-company-mode 1) ;; 开启全局 company 补全
+(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+;;
 (setq-default abbrev-mode t)
 (define-abbrev-table 'global-abbrev-table '(
 					    ("ykq" "yaokeqi")

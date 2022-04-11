@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Long separator comment
+# key: ccc
+# --
+`(myf/gen-comment-block)`

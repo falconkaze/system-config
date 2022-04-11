@@ -3,7 +3,7 @@
 (require 'package)
 (package-initialize)
 (setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+			 ;("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
 			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 			 ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			 ))
@@ -39,7 +39,6 @@
 		    counsel
 		    ;; TODO
 		    smartparens
-		    rainbow-delimiters
 		    ;; --- Major Mode ---
 		    js2-mode
 		    ;; --- Minor Mode ---
@@ -88,13 +87,17 @@
 (setcdr evil-insert-state-map nil)
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
 
-(use-package posframe)
+;; ===============================Rime 输入法配置===============================
+
+;(use-package posframe)
 (use-package rime
   :init
   (setq default-input-method "rime")
   :custom
-  (rime-select-schema "luna-pinyin_simp")
-  (rime-user-data-dir "~/.local/share/fcitx5/rime")
+  (rime-librime-root "~/.emacs.d/librime/dist")
+  ;(rime-select-schema "luna-pinyin_simp")
+  ;(rime-user-data-dir "~/.local/share/fcitx5/rime")
+  (rime-user-data-dir "~/Library/Rime")
   (rime-posframe-properties
    (list :background-color "#333333"
          :foreground-color "#dcdccc"
@@ -103,11 +106,18 @@
 					; (set-face-attribute 'rime-default-face nil :foreground "#839496" :background "#073642")
   )
 
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-(add-hook 'yaml-mode-hook
-	  '(lambda ()
-             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+;; ===========================编程模式下使用彩虹括号============================
+;; https://github.com/Fanael/rainbow-delimiters
+(use-package rainbow-delimiters
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  )
+
+;(require 'yaml-mode)
+;(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+;(add-hook 'yaml-mode-hook
+;	  '(lambda ()
+;             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 (require 'hungry-delete)
 (global-hungry-delete-mode)
