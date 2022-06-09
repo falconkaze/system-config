@@ -122,9 +122,11 @@ export MAVEN_OPTS="-Xms4g -Xmx8G"
 
 # ------------------------ bind keys --------------------------------
 if [[ $(uname) == "Darwin" ]];then
-    bindkey -s '^[k' '^a^kcat <<EOF|xargs echo -n|pbcopy\n^y\nEOF\n'
+    #bindkey -s '^[k' "^a^kcat <<'EOF'|xargs echo -n|pbcopy\n^y\nEOF\n"
+    #bindkey -s '^[k' "^a^kcat <<'EOF'|pbcopy\n^y\nEOF\n"
+    bindkey -s '^[k' "^a^kpbcopy <<'EOF'\n^y\nEOF\n"
 elif [[ $(uname) == "Linux" ]]; then
-    bindkey -s '^[k' '^a^kcat <<EOF|xargs echo -n|xclip -selection c \n^y\nEOF\n'
+    bindkey -s '^[k' "^a^kcat <<'EOF'|xclip -selection c \n^y\nEOF\n"
 fi
 #source /usr/local/share/antigen/antigen.zsh
 #antigen use oh-my-zsh
@@ -154,3 +156,16 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
 
 alias j='z'
+
+# =================================加速粘贴速度=================================
+# see [zsh 粘贴加速，解决粘贴卡慢问题 - 简书](https://www.jianshu.com/p/83d9b8e245ae)
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish

@@ -32,3 +32,6 @@ target
 ### python
 __pycache__
 *.pyc
+
+### Vim ###
+*.swp

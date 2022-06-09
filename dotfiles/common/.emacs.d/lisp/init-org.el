@@ -114,7 +114,7 @@
 (add-to-list 'org-capture-templates
 	     '("tw" "Work Task" entry
 	       (file+function "~/org/private/work.org" (lambda () (find-tree-location (get-work-tree))))
-	       "* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t ))
+	       "\n* TODO %^{任务名}\n%U\n" :clock-in t :clock-resume t ))
 
 ;; daily 相关
 (add-to-list 'org-capture-templates '("d" "Daily"))

@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 if [[ $(uname) = "Darwin" ]]; then
-    brew install aspell
     echo "Mac osx"
+    brew install aspell goku
+    brew install --cask squirrel
 elif [[ $(uname -a) = *"arch"* ]]; then
     echo "Archlinux OS"
     # gui
@@ -21,7 +22,8 @@ elif [[ $(uname -a) = *"arch"* ]]; then
         i3-gaps i3status i3lock numlockx polybar dmenu \
         rofi \
         zip unzip \
-        xclip
+        xclip \
+        rust go lua htop
 
     yay -S google-chrome
 
