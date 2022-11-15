@@ -73,6 +73,7 @@ Plugin 'hotoo/pangu.vim'                  " 格式化中文文档
 "Plugin 'tell-k/vim-autopep8'
 "Plugin 'vim-scripts/javacomplete'
 "Plugin 'scrooloose/nerdcommenter'
+Plugin 'lyokha/vim-xkbswitch'
 
 call vundle#end()                         "stop - all plugins above
 "-----------------------------------theme config------------------------------------
@@ -425,7 +426,8 @@ elseif has('unix')
     "##### auto fcitx end ######
 endif
 "退出插入模式
-autocmd InsertLeave * call InputMethodWhenExit()
+"autocmd InsertLeave * call InputMethodWhenExit()
 "进入插入模式
 "autocmd InsertEnter *.md call InputMethodWhenEnter()
-autocmd InsertEnter * call InputMethodWhenEnter()
+"autocmd InsertEnter * call InputMethodWhenEnter()
+"let g:XkbSwitchEnabled = 1

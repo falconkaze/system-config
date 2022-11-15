@@ -23,7 +23,8 @@ do
         fi
 
         # 保留最新5个文件
-        rm -rf $(ls -t -d */ | sed -n '6,$p')
+        #rm -rf $(ls -t -d */ | sed -n '6,$p')
+        rm -rf $(ls -t -d */ | sed -n '3,$p')
     done
     echo clean $path success!
 done

@@ -124,7 +124,9 @@ export MAVEN_OPTS="-Xms4g -Xmx8G"
 if [[ $(uname) == "Darwin" ]];then
     #bindkey -s '^[k' "^a^kcat <<'EOF'|xargs echo -n|pbcopy\n^y\nEOF\n"
     #bindkey -s '^[k' "^a^kcat <<'EOF'|pbcopy\n^y\nEOF\n"
-    bindkey -s '^[k' "^a^kpbcopy <<'EOF'\n^y\nEOF\n"
+    #bindkey -s '^[k' "^a^kpbcopy <<'EOF'|tr -d '\\\r\\\n'\n^y\nEOF\n"
+    # 注意：这里只支持单行的命令，支持里面带有括号等情况
+    bindkey -s '^[k' "^a^kcat <<'EOF'|tr -d '\\\r\\\n'|pbcopy\n^y\nEOF\n"
 elif [[ $(uname) == "Linux" ]]; then
     bindkey -s '^[k' "^a^kcat <<'EOF'|xclip -selection c \n^y\nEOF\n"
 fi

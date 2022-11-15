@@ -1,8 +1,12 @@
 [[ -r ~/.my_func_common ]] && source ~/.my_func_common
 
+MY_CONFIG_PATH="~/git/mine/system-config"
+
 # --------------------------------------------------------------------
 #                         alias 配置
 # --------------------------------------------------------------------
+
+alias hashcode="java -cp $MY_CONFIG_PATH/sh/java StringHashCode"
 
 alias l='ls -CF --color=auto'
 alias ls='ls --color=auto'
@@ -45,10 +49,13 @@ alias timestamp='nanotime=`date +%s%N`;echo ${nanotime:0:13}'
 alias time2date='fun() { date -d @${1} "+%Y-%m-%d %H:%M:%S";};fun'
 alias date2time='fun() { date -d "$*" "+%s000"};fun'
 
+
+alias fd='fun() {find . -name "*${1}*"};fun'
+
 #\[\033[01;31m\]\u\[\033[00m\]\[\033[01;32m\]@\H\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\n\$
 
 # 开发配置
-alias mcla='mvn -U clean install -Dcheckstyle.skip=true -Dmaven.test.skip=true -Dcicheck.skip=true'
+alias mcla='mvn -T 4 -U clean install -Dcheckstyle.skip=true -Dmaven.test.skip=true -Dcicheck.skip=true'
 
 # git 配置
 alias ga='git add'
@@ -82,9 +89,17 @@ alias u+x='chmod u+x'
 if [[ $(uname) == "Darwin" ]]; then
     alias pwd="pwd | pbcopy && pwd"
     alias rm="trash"
+    export FZF_DEFAULT_OPTS="
+    --bind 'ctrl-y:execute-silent(echo ${(q)item} | pbcopy)'
+    --bind 'ctrl-alt-y:execute(readlink -f {} | pbcopy)'
+    "
 else
     alias rm=trash-put
     alias rl=trash-list
     alias ur=trash-restore
     alias pwd="pwd | xclip -selection c && pwd"
+    export FZF_DEFAULT_OPTS="
+    --bind 'ctrl-y:execute(readlink -f {} | xclip -selection clipboard)'
+    --bind 'ctrl-alt-y:execute-silent(xclip -selection clipboard {})'
+    "
 fi
