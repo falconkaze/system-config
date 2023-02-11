@@ -1,6 +1,8 @@
 [[ -r ~/.my_func_common ]] && source ~/.my_func_common
 
-MY_CONFIG_PATH="~/git/mine/system-config"
+MY_CONFIG_PATH="$HOME/git/mine/system-config"
+
+PATH=$MY_CONFIG_PATH/sh/python:$PATH
 
 # --------------------------------------------------------------------
 #                         alias 配置
